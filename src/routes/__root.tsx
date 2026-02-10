@@ -1,4 +1,4 @@
-/// <reference types="vite/client" />
+import { HeroUIProvider } from "@heroui/react";
 import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -26,7 +26,9 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
+        <HeroUIProvider>
+          <Outlet />
+        </HeroUIProvider>
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
