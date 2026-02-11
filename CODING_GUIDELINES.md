@@ -420,6 +420,74 @@ export const exampleFn = createServerFn({ method: "POST" })
 | `.client.ts`    | クライアント専用ロジック | `analytics.client.ts` |
 | `.ts`           | 共有コード               | `utils.ts`            |
 
+#### サーバールートパターン（外部フレームワーク統合）
+
+TanStack Start では `createFileRoute` の `server.handlers` を使用して、外部フレームワーク（Hono, Elysia 等）をマウントします。
+
+```typescript
+// src/routes/api/hono/$.ts
+import { createFileRoute } from "@tanstack/react-router";
+
+import { app } from "~/features/hono/lib/app";
+
+// catch-all ルート: /api/hono/* の全リクエストを Hono に転送
+export const Route = createFileRoute("/api/hono/$")({
+  server: {
+    handlers: {
+      ANY: ({ request }) => app.fetch(request),
+    },
+  },
+});
+```
+
+**重要なポイント:**
+
+- `$` サフィックスでキャッチオールルートを作成
+- `ANY` メソッドで全 HTTP メソッドをキャッチ
+- `request` オブジェクトをそのまま外部フレームワークに転送
+- 外部フレームワークは `basePath` でプレフィックスを設定
+
+#### Features ディレクトリ構造（RPCフレームワーク）
+
+```
+src/features/
+├── shared/                    # 全フレームワーク共通
+│   ├── lib/
+│   │   └── todo-store.ts     # インメモリCRUDストア
+│   └── schemas/
+│       └── todo.ts           # Valibot スキーマ
+├── hono/
+│   └── lib/
+│       └── app.ts            # Hono アプリ定義
+├── elysia/
+│   └── lib/
+│       └── app.ts            # Elysia (Runtime) アプリ定義
+├── elysia-typegen/
+│   └── lib/
+│       └── app.ts            # Elysia (TypeGen) アプリ定義
+├── orpc/
+│   └── lib/
+│       ├── handler.ts        # OpenAPI ハンドラ
+│       └── router.ts         # oRPC ルーター定義
+└── trpc/
+    ├── lib/
+    │   ├── openapi-handler.ts # OpenAPI ハンドラ (oRPC変換)
+    │   └── router.ts         # tRPC ルーター定義
+    └── schemas/
+        └── todo.ts           # tRPC 専用 Zod スキーマ
+```
+
+#### OpenAPI スキーマ定義規約
+
+| フレームワーク | バリデーション | 注意事項                                |
+| -------------- | -------------- | --------------------------------------- |
+| Hono           | Valibot        | hono-openapi の resolver で変換         |
+| oRPC           | Valibot        | Standard Schema 対応で直接利用可能      |
+| Elysia         | Valibot        | Standard Schema 経由で Valibot 利用     |
+| tRPC           | Zod v4         | **例外**: OpenAPI 非対応のため Zod 必須 |
+
+> **注意**: Zod は tRPC 以外での使用禁止です。他のフレームワークでは必ず Valibot を使用してください。
+
 ---
 
 ## 追加推奨事項
