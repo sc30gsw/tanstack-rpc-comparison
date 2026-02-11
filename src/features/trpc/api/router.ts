@@ -12,7 +12,7 @@ import {
   UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/users/schemas/zod-v3/user";
+} from "~/features/users/schemas/zod/user";
 import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
