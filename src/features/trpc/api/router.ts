@@ -12,7 +12,7 @@ import {
   UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/trpc/schemas/user";
+} from "~/features/users/schemas/zod-v3/user";
 import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
