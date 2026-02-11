@@ -56,7 +56,6 @@ export function toApiError(error: unknown): ApiError {
     };
   }
 
-  // Unknown errors
   return {
     code: "UNKNOWN_ERROR",
     message: error instanceof Error ? error.message : "エラーが発生しました",
