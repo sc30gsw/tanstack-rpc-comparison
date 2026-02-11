@@ -1,4 +1,4 @@
-import { HeroUIProvider } from "@heroui/react";
+import { HeroUIProvider, Spinner } from "@heroui/react";
 import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -56,8 +56,8 @@ function ErrorComponent({ error }: { error: Error }) {
 
 function PendingComponent() {
   return (
-    <div className="p-4">
-      <p>読み込み中...</p>
+    <div className="flex justify-center py-12">
+      <Spinner label="読み込み中..." />
     </div>
   );
 }
