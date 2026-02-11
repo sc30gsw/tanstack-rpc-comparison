@@ -7,9 +7,7 @@ import { userPlugin } from "~/features/elysia-typegen/api";
 const app = new Elysia({ prefix: "/api/elysia-typegen" })
   .use(
     openapi({
-      references: fromTypes(
-        import.meta.env.NODE_ENV === "production" ? "dist/index.d.ts" : "src/index.ts",
-      ),
+      references: fromTypes("src/features/elysia-typegen/api/index.ts"),
       documentation: {
         info: {
           description: "Elysia + TypeScript型ベース生成による User API（型注釈ベース）",
