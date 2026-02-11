@@ -37,9 +37,10 @@ export const userRoutes = new Hono()
     validator("query", pick(ListUsersParamsSchema, ["limit", "skip"])),
     async (c) => {
       const { limit, skip } = c.req.valid("query");
+
       const result = await UserService.list({
-        limit: limit ? Number(limit) : undefined,
-        skip: skip ? Number(skip) : undefined,
+        limit,
+        skip,
       });
 
       return c.json(result);
@@ -64,6 +65,7 @@ export const userRoutes = new Hono()
     validator("query", pick(SearchUsersParamsSchema, ["q"])),
     async (c) => {
       const { q } = c.req.valid("query");
+
       const result = await UserService.search({ q });
 
       return c.json(result);
@@ -95,6 +97,7 @@ export const userRoutes = new Hono()
     }),
     async (c) => {
       const id = Number(c.req.param("id"));
+
       const result = await Result.tryPromise({
         catch: () => ({ message: "ユーザーが見つかりません" }),
         try: async () => await UserService.getById(id),

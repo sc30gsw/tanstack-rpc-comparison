@@ -7,6 +7,8 @@ import { z } from "zod";
 import {
   CreateUserSchema,
   DeleteUserResponseSchema,
+  ListUsersParamsSchema,
+  SearchUsersParamsSchema,
   UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
@@ -66,12 +68,7 @@ export const trpcRouter = t.router({
     .meta({
       route: { method: "GET", path: "/users", summary: "ユーザー一覧を取得" },
     })
-    .input(
-      z.object({
-        limit: z.number().optional(),
-        skip: z.number().optional(),
-      }),
-    )
+    .input(ListUsersParamsSchema)
     .output(UserListResponseSchema)
     .query(async ({ input }) => {
       const result = await Result.tryPromise({
@@ -117,7 +114,7 @@ export const trpcRouter = t.router({
     .meta({
       route: { method: "GET", path: "/users/search", summary: "ユーザーを検索" },
     })
-    .input(z.object({ q: z.string() }))
+    .input(SearchUsersParamsSchema)
     .output(UserListResponseSchema)
     .query(async ({ input }) => {
       const result = await Result.tryPromise({

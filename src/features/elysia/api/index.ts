@@ -20,8 +20,8 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
     "/",
     async ({ query }) => {
       return await UserService.list({
-        limit: query.limit ? Number(query.limit) : undefined,
-        skip: query.skip ? Number(query.skip) : undefined,
+        limit: query.limit,
+        skip: query.skip,
       });
     },
     {
@@ -54,7 +54,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
     async ({ params, set }) => {
       const result = await Result.tryPromise({
         catch: () => ({ message: "ユーザーが見つかりません" }),
-        try: async () => await UserService.getById(Number(params.id)),
+        try: async () => await UserService.getById(params.id),
       });
 
       if (result.isOk()) {
@@ -97,7 +97,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
     async ({ body, params, set }) => {
       const result = await Result.tryPromise({
         catch: () => ({ message: "ユーザーが見つかりません" }),
-        try: async () => await UserService.update(Number(params.id), body),
+        try: async () => await UserService.update(params.id, body),
       });
 
       if (result.isOk()) {
@@ -126,7 +126,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
     async ({ params, set }) => {
       const result = await Result.tryPromise({
         catch: () => ({ message: "ユーザーが見つかりません" }),
-        try: async () => await UserService.delete(Number(params.id)),
+        try: async () => await UserService.delete(params.id),
       });
 
       if (result.isOk()) {
