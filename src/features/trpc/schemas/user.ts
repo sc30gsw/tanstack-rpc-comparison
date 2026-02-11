@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 
 const CoordinatesSchema = z.object({
   lat: z.number(),

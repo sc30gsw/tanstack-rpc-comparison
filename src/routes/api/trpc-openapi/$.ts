@@ -1,6 +1,7 @@
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { toORPCRouter } from "@orpc/trpc";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { trpcRouter } from "~/features/trpc/api/router";
@@ -11,6 +12,7 @@ const orpcRouter = toORPCRouter(trpcRouter);
 const handler = new OpenAPIHandler(orpcRouter, {
   plugins: [
     new OpenAPIReferencePlugin({
+      schemaConverters: [new ZodToJsonSchemaConverter()],
       docsPath: "/docs",
       specGenerateOptions: {
         info: {

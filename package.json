@@ -25,6 +25,7 @@
     "@orpc/server": "^1.13.4",
     "@orpc/trpc": "^1.13.4",
     "@orpc/valibot": "^1.13.4",
+    "@orpc/zod": "^1.13.4",
     "@scalar/hono-api-reference": "^0.9.40",
     "@tanstack/react-router": "^1.159.5",
     "@tanstack/react-start": "^1.159.5",
