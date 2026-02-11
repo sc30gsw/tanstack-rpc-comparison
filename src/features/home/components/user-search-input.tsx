@@ -17,12 +17,12 @@ export function UserSearchInput() {
       navigate({
         search: (prev) => ({
           ...prev,
-          q: deferredValue,
+          q: newValue,
           skip: 0,
         }),
       });
     },
-    [navigate, deferredValue],
+    [navigate],
   );
 
   const handleClear = useCallback(() => {
@@ -39,7 +39,7 @@ export function UserSearchInput() {
       placeholder="ユーザーを検索..."
       startContent={<span className="pointer-events-none text-default-400">&#x1F50D;</span>}
       type="search"
-      value={value}
+      value={deferredValue}
     />
   );
 }
