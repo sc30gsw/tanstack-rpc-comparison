@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
+import { Route as ApiTrpcOrpcSplatRouteImport } from './routes/api/trpc-orpc/$'
 import { Route as ApiTrpcOpenapiSplatRouteImport } from './routes/api/trpc-openapi/$'
 import { Route as ApiOrpcSplatRouteImport } from './routes/api/orpc/$'
 import { Route as ApiHonoSplatRouteImport } from './routes/api/hono/$'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcOrpcSplatRoute = ApiTrpcOrpcSplatRouteImport.update({
+  id: '/api/trpc-orpc/$',
+  path: '/api/trpc-orpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcOpenapiSplatRoute = ApiTrpcOpenapiSplatRouteImport.update({
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/api/hono/$': typeof ApiHonoSplatRoute
   '/api/orpc/$': typeof ApiOrpcSplatRoute
   '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc-orpc/$': typeof ApiTrpcOrpcSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/api/hono/$': typeof ApiHonoSplatRoute
   '/api/orpc/$': typeof ApiOrpcSplatRoute
   '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc-orpc/$': typeof ApiTrpcOrpcSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/api/hono/$': typeof ApiHonoSplatRoute
   '/api/orpc/$': typeof ApiOrpcSplatRoute
   '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc-orpc/$': typeof ApiTrpcOrpcSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/api/hono/$'
     | '/api/orpc/$'
     | '/api/trpc-openapi/$'
+    | '/api/trpc-orpc/$'
     | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/api/hono/$'
     | '/api/orpc/$'
     | '/api/trpc-openapi/$'
+    | '/api/trpc-orpc/$'
     | '/api/trpc/$'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/api/hono/$'
     | '/api/orpc/$'
     | '/api/trpc-openapi/$'
+    | '/api/trpc-orpc/$'
     | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   ApiHonoSplatRoute: typeof ApiHonoSplatRoute
   ApiOrpcSplatRoute: typeof ApiOrpcSplatRoute
   ApiTrpcOpenapiSplatRoute: typeof ApiTrpcOpenapiSplatRoute
+  ApiTrpcOrpcSplatRoute: typeof ApiTrpcOrpcSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/api/trpc/$'
       fullPath: '/api/trpc/$'
       preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc-orpc/$': {
+      id: '/api/trpc-orpc/$'
+      path: '/api/trpc-orpc/$'
+      fullPath: '/api/trpc-orpc/$'
+      preLoaderRoute: typeof ApiTrpcOrpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/trpc-openapi/$': {
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHonoSplatRoute: ApiHonoSplatRoute,
   ApiOrpcSplatRoute: ApiOrpcSplatRoute,
   ApiTrpcOpenapiSplatRoute: ApiTrpcOpenapiSplatRoute,
+  ApiTrpcOrpcSplatRoute: ApiTrpcOrpcSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
 export const routeTree = rootRouteImport

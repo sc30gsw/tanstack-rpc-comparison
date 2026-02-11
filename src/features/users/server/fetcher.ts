@@ -9,8 +9,9 @@ import {
   elysiaTypegenApi,
   honoClient,
   orpcClient,
-  trpcCaller,
+  trpcClient,
   trpcOpenapiClient,
+  trpcOrpcClient,
 } from "~/lib/rpc-clients";
 
 export const fetchUsers = createServerFn({ method: "GET" })
@@ -27,11 +28,15 @@ export const fetchUsers = createServerFn({ method: "GET" })
           }
 
           case "trpc": {
-            return await trpcCaller.getUsers({ limit, skip });
+            return await trpcClient.getUsers({ limit, skip });
           }
 
           case "trpc-openapi": {
             return await trpcOpenapiClient.getUsers({ limit, skip });
+          }
+
+          case "trpc-orpc": {
+            return await trpcOrpcClient.getUsers({ limit, skip });
           }
 
           case "hono": {
@@ -91,11 +96,15 @@ export const searchUsers = createServerFn({ method: "GET" })
           }
 
           case "trpc": {
-            return await trpcCaller.searchUsers({ q });
+            return await trpcClient.searchUsers({ q });
           }
 
           case "trpc-openapi": {
             return await trpcOpenapiClient.searchUsers({ q });
+          }
+
+          case "trpc-orpc": {
+            return await trpcOrpcClient.searchUsers({ q });
           }
 
           case "hono": {

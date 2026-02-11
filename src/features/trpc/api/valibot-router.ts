@@ -1,7 +1,8 @@
+import type { ORPCMeta } from "@orpc/trpc";
 import { TRPCError } from "@trpc/server";
 import { initTRPC } from "@trpc/server";
 import { Result } from "better-result";
-import type { OpenApiMeta } from "trpc-to-openapi";
+import { pick } from "valibot";
 
 import {
   CreateUserSchema,
@@ -10,16 +11,16 @@ import {
   SearchUsersParamsSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/users/schemas/zod/user";
+} from "~/features/users/schemas/valibot/user";
 import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
-//? OpenApiMeta で trpc-to-openapi の OpenAPI メタデータをサポート
-export const t = initTRPC.meta<OpenApiMeta>().create();
+//? ORPCMeta で oRPC 変換用の OpenAPI メタデータをサポート（Valibot 版）
+export const tv = initTRPC.meta<ORPCMeta>().create();
 
-export const trpcRouter = t.router({
-  createUser: t.procedure
-    .meta({ openapi: { method: "POST", path: "/users", summary: "新しいユーザーを作成" } })
+export const trpcValibotRouter = tv.router({
+  createUser: tv.procedure
+    .meta({ route: { method: "POST", path: "/users", summary: "新しいユーザーを作成" } })
     .input(CreateUserSchema)
     .output(UserSchema)
     .mutation(async ({ input }) => {
@@ -39,11 +40,11 @@ export const trpcRouter = t.router({
       });
     }),
 
-  deleteUser: t.procedure
+  deleteUser: tv.procedure
     .meta({
-      openapi: { method: "DELETE", path: "/users/{id}", summary: "ユーザーを削除" },
+      route: { method: "DELETE", path: "/users/{id}", summary: "ユーザーを削除" },
     })
-    .input(UserSchema.pick({ id: true }))
+    .input(pick(UserSchema, ["id"]))
     .output(DeleteUserResponseSchema)
     .mutation(async ({ input }) => {
       const result = await Result.tryPromise({
@@ -62,9 +63,9 @@ export const trpcRouter = t.router({
       });
     }),
 
-  getUsers: t.procedure
+  getUsers: tv.procedure
     .meta({
-      openapi: { method: "GET", path: "/users", summary: "ユーザー一覧を取得" },
+      route: { method: "GET", path: "/users", summary: "ユーザー一覧を取得" },
     })
     .input(ListUsersParamsSchema)
     .output(UserListResponseSchema)
@@ -85,11 +86,11 @@ export const trpcRouter = t.router({
       });
     }),
 
-  getUserById: t.procedure
+  getUserById: tv.procedure
     .meta({
-      openapi: { method: "GET", path: "/users/{id}", summary: "指定IDのユーザーを取得" },
+      route: { method: "GET", path: "/users/{id}", summary: "指定IDのユーザーを取得" },
     })
-    .input(UserSchema.pick({ id: true }))
+    .input(pick(UserSchema, ["id"]))
     .output(UserSchema)
     .query(async ({ input }) => {
       const result = await Result.tryPromise({
@@ -108,9 +109,9 @@ export const trpcRouter = t.router({
       });
     }),
 
-  searchUsers: t.procedure
+  searchUsers: tv.procedure
     .meta({
-      openapi: { method: "GET", path: "/users/search", summary: "ユーザーを検索" },
+      route: { method: "GET", path: "/users/search", summary: "ユーザーを検索" },
     })
     .input(SearchUsersParamsSchema)
     .output(UserListResponseSchema)
@@ -131,20 +132,11 @@ export const trpcRouter = t.router({
       });
     }),
 
-  updateUser: t.procedure
+  updateUser: tv.procedure
     .meta({
-      openapi: { method: "PUT", path: "/users/{id}", summary: "ユーザーを更新" },
+      route: { method: "PUT", path: "/users/{id}", summary: "ユーザーを更新" },
     })
-    .input(
-      UserSchema.pick({
-        age: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        username: true,
-        id: true,
-      }),
-    )
+    .input(pick(UserSchema, ["age", "email", "firstName", "lastName", "username", "id"]))
     .output(UserSchema)
     .mutation(async ({ input }) => {
       const { id, ...data } = input;
