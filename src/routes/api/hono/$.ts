@@ -7,7 +7,7 @@ import { userRoutes } from "~/features/hono/api";
 
 const app = new Hono().basePath("/api/hono");
 
-app.route("/users", userRoutes);
+export const route = app.route("/users", userRoutes);
 
 app.get("/openapi.json", (c) => {
   const spec = generateSpecs(app, {
@@ -42,3 +42,5 @@ export const Route = createFileRoute("/api/hono/$")({
     },
   },
 });
+
+export type AppType = typeof route;

@@ -10,11 +10,11 @@ import {
 } from "@heroui/react";
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 
-import { fetchUsersFn, searchUsersFn } from "~/features/home/api/user.functions";
 import { FrameworkSelector } from "~/features/home/components/framework-selector";
 import { UserSearchInput } from "~/features/home/components/user-search-input";
 import { UserTable } from "~/features/home/components/user-table";
 import { defaultValues, homeSearchSchema } from "~/features/home/schemas/search-schema";
+import { fetchUsers, searchUsers } from "~/features/users/server/fetcher";
 
 export const Route = createFileRoute("/")({
   validateSearch: homeSearchSchema,
@@ -28,11 +28,16 @@ export const Route = createFileRoute("/")({
     middlewares: [stripSearchParams(defaultValues)],
   },
   loader: async ({ deps }) => {
-    const users = deps.q
-      ? await searchUsersFn({ data: { q: deps.q } })
-      : await fetchUsersFn({ data: { limit: deps.limit, skip: deps.skip } });
+    const result = deps.q
+      ? await searchUsers({ framework: deps.framework, q: deps.q })
+      : await fetchUsers({ framework: deps.framework, limit: deps.limit, skip: deps.skip });
 
-    return { ...users, framework: deps.framework };
+    return result.match({
+      err: (error) => {
+        throw new Error(error.message);
+      },
+      ok: (data) => ({ ...data, framework: deps.framework }),
+    });
   },
   component: Home,
   pendingComponent: () => (
@@ -77,22 +82,26 @@ const FRAMEWORK_CARDS = [
   },
   {
     color: "danger",
+    description: "tRPC ネイティブ RPC プロトコル。fetchRequestHandler で直接処理。",
+    docsUrl: "/api/trpc-openapi/docs",
+    name: "tRPC (Native)",
+    openapi: "なし（RPC専用）",
+    validation: "Zod v4",
+  },
+  {
+    color: "danger",
     description: "tRPC + Zod v4 → @orpc/trpc で oRPC に変換して OpenAPI を生成。",
     docsUrl: "/api/trpc-openapi/docs",
-    name: "tRPC",
+    name: "tRPC (OpenAPI)",
     openapi: "@orpc/trpc 変換",
     validation: "Zod v4",
   },
 ] as const satisfies readonly {
-  color: string;
+  color: "danger" | "primary" | "secondary" | "success" | "warning";
   description: string;
   docsUrl: `/api/${string}/docs`;
   name: string;
-  openapi:
-    | `@${string}/openapi`
-    | `@${string}/openapi (fromTypes)`
-    | `@${string}/trpc 変換`
-    | `hono-openapi`;
+  openapi: string;
   validation: "Valibot" | "TypeScript型" | "Zod v4";
 }[];
 

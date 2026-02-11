@@ -17,201 +17,195 @@ import { UserService } from "~/features/users/services/user-service";
 
 const TAG = "Users";
 
-export const userRoutes = new Hono();
-
-userRoutes.get(
-  "/",
-  describeRoute({
-    description: "ユーザー一覧を取得します",
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: resolver(UserListResponseSchema),
+export const userRoutes = new Hono()
+  .get(
+    "/",
+    describeRoute({
+      description: "ユーザー一覧を取得します",
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              schema: resolver(UserListResponseSchema),
+            },
           },
+          description: "ユーザー一覧",
         },
-        description: "ユーザー一覧",
       },
+      tags: [TAG],
+    }),
+    validator("query", pick(ListUsersParamsSchema, ["limit", "skip"])),
+    async (c) => {
+      const { limit, skip } = c.req.valid("query");
+      const result = await UserService.list({
+        limit: limit ? Number(limit) : undefined,
+        skip: skip ? Number(skip) : undefined,
+      });
+
+      return c.json(result);
     },
-    tags: [TAG],
-  }),
-  validator("query", pick(ListUsersParamsSchema, ["limit", "skip"])),
-  async (c) => {
-    const { limit, skip } = c.req.valid("query");
-    const result = await UserService.list({
-      limit: limit ? Number(limit) : undefined,
-      skip: skip ? Number(skip) : undefined,
-    });
-
-    return c.json(result);
-  },
-);
-
-userRoutes.get(
-  "/search",
-  describeRoute({
-    description: "クエリ文字列でユーザーを検索します",
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: resolver(UserListResponseSchema),
+  )
+  .get(
+    "/search",
+    describeRoute({
+      description: "クエリ文字列でユーザーを検索します",
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              schema: resolver(UserListResponseSchema),
+            },
           },
+          description: "検索結果",
         },
-        description: "検索結果",
       },
+      tags: [TAG],
+    }),
+    validator("query", pick(SearchUsersParamsSchema, ["q"])),
+    async (c) => {
+      const { q } = c.req.valid("query");
+      const result = await UserService.search({ q });
+
+      return c.json(result);
     },
-    tags: [TAG],
-  }),
-  validator("query", pick(SearchUsersParamsSchema, ["q"])),
-  async (c) => {
-    const { q } = c.req.valid("query");
-    const result = await UserService.search({ q });
-
-    return c.json(result);
-  },
-);
-
-userRoutes.get(
-  "/:id",
-  describeRoute({
-    description: "指定IDのユーザーを取得します",
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: resolver(UserSchema),
+  )
+  .get(
+    "/:id",
+    describeRoute({
+      description: "指定IDのユーザーを取得します",
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              schema: resolver(UserSchema),
+            },
           },
+          description: "ユーザー",
         },
-        description: "ユーザー",
-      },
-      404: {
-        content: {
-          "application/json": {
-            schema: resolver(MessageSchema),
+        404: {
+          content: {
+            "application/json": {
+              schema: resolver(MessageSchema),
+            },
           },
+          description: "ユーザーが見つかりません",
         },
-        description: "ユーザーが見つかりません",
       },
+      tags: [TAG],
+    }),
+    async (c) => {
+      const id = Number(c.req.param("id"));
+      const result = await Result.tryPromise({
+        catch: () => ({ message: "ユーザーが見つかりません" }),
+        try: async () => await UserService.getById(id),
+      });
+
+      if (result.isOk()) {
+        return c.json(result.value);
+      }
+
+      return c.json(result.error, 404);
     },
-    tags: [TAG],
-  }),
-  async (c) => {
-    const id = Number(c.req.param("id"));
-    const result = await Result.tryPromise({
-      catch: () => ({ message: "ユーザーが見つかりません" }),
-      try: async () => await UserService.getById(id),
-    });
-
-    if (result.isOk()) {
-      return c.json(result.value);
-    }
-
-    return c.json(result.error, 404);
-  },
-);
-
-userRoutes.post(
-  "/",
-  describeRoute({
-    description: "新しいユーザーを作成します",
-    responses: {
-      201: {
-        content: {
-          "application/json": {
-            schema: resolver(UserSchema),
+  )
+  .post(
+    "/",
+    describeRoute({
+      description: "新しいユーザーを作成します",
+      responses: {
+        201: {
+          content: {
+            "application/json": {
+              schema: resolver(UserSchema),
+            },
           },
+          description: "作成されたユーザー",
         },
-        description: "作成されたユーザー",
       },
+      tags: ["Users"],
+    }),
+    validator("json", CreateUserSchema),
+    async (c) => {
+      const input = c.req.valid("json");
+      const result = await UserService.create(input);
+
+      return c.json(result, 201);
     },
-    tags: ["Users"],
-  }),
-  validator("json", CreateUserSchema),
-  async (c) => {
-    const input = c.req.valid("json");
-    const result = await UserService.create(input);
-
-    return c.json(result, 201);
-  },
-);
-
-userRoutes.put(
-  "/:id",
-  describeRoute({
-    description: "指定IDのユーザーを更新します",
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: resolver(UserSchema),
+  )
+  .put(
+    "/:id",
+    describeRoute({
+      description: "指定IDのユーザーを更新します",
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              schema: resolver(UserSchema),
+            },
           },
+          description: "更新されたユーザー",
         },
-        description: "更新されたユーザー",
-      },
-      404: {
-        content: {
-          "application/json": {
-            schema: resolver(MessageSchema),
+        404: {
+          content: {
+            "application/json": {
+              schema: resolver(MessageSchema),
+            },
           },
+          description: "ユーザーが見つかりません",
         },
-        description: "ユーザーが見つかりません",
       },
+      tags: [TAG],
+    }),
+    validator("json", UpdateUserSchema),
+    async (c) => {
+      const id = Number(c.req.param("id"));
+      const input = c.req.valid("json");
+      const result = await Result.tryPromise({
+        catch: () => ({ message: "ユーザーが見つかりません" }),
+        try: async () => await UserService.update(id, input),
+      });
+
+      if (result.isOk()) {
+        return c.json(result.value);
+      }
+
+      return c.json(result.error, 404);
     },
-    tags: [TAG],
-  }),
-  validator("json", UpdateUserSchema),
-  async (c) => {
-    const id = Number(c.req.param("id"));
-    const input = c.req.valid("json");
-    const result = await Result.tryPromise({
-      catch: () => ({ message: "ユーザーが見つかりません" }),
-      try: async () => await UserService.update(id, input),
-    });
-
-    if (result.isOk()) {
-      return c.json(result.value);
-    }
-
-    return c.json(result.error, 404);
-  },
-);
-
-userRoutes.delete(
-  "/:id",
-  describeRoute({
-    description: "指定IDのユーザーを削除します",
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: resolver(DeleteUserResponseSchema),
+  )
+  .delete(
+    "/:id",
+    describeRoute({
+      description: "指定IDのユーザーを削除します",
+      responses: {
+        200: {
+          content: {
+            "application/json": {
+              schema: resolver(DeleteUserResponseSchema),
+            },
           },
+          description: "削除成功",
         },
-        description: "削除成功",
-      },
-      404: {
-        content: {
-          "application/json": {
-            schema: resolver(MessageSchema),
+        404: {
+          content: {
+            "application/json": {
+              schema: resolver(MessageSchema),
+            },
           },
+          description: "ユーザーが見つかりません",
         },
-        description: "ユーザーが見つかりません",
       },
+      tags: [TAG],
+    }),
+    async (c) => {
+      const id = Number(c.req.param("id"));
+      const result = await Result.tryPromise({
+        catch: () => ({ message: "ユーザーが見つかりません" }),
+        try: async () => await UserService.delete(id),
+      });
+
+      if (result.isOk()) {
+        return c.json(result.value);
+      }
+
+      return c.json(result.error, 404);
     },
-    tags: [TAG],
-  }),
-  async (c) => {
-    const id = Number(c.req.param("id"));
-    const result = await Result.tryPromise({
-      catch: () => ({ message: "ユーザーが見つかりません" }),
-      try: async () => await UserService.delete(id),
-    });
-
-    if (result.isOk()) {
-      return c.json(result.value);
-    }
-
-    return c.json(result.error, 404);
-  },
-);
+  );
