@@ -10,6 +10,7 @@ const FRAMEWORK_OPTIONS = [
   { key: "elysia-typegen", label: "Elysia (TG)" },
   { key: "trpc", label: "tRPC" },
   { key: "trpc-openapi", label: "tRPC (OA)" },
+  { key: "trpc-orpc", label: "tRPC (oRPC)" },
 ] as const satisfies readonly { key: (typeof FRAMEWORKS)[number]; label: string }[];
 
 export function FrameworkSelector({ framework }: Pick<HomeSearchParams, "framework">) {

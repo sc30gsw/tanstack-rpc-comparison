@@ -5,6 +5,7 @@ export const FRAMEWORKS = [
   "elysia-typegen",
   "trpc",
   "trpc-openapi",
+  "trpc-orpc",
 ] as const satisfies readonly string[];
 
 export type Framework = (typeof FRAMEWORKS)[number];

@@ -25,7 +25,6 @@
     "@orpc/server": "^1.13.4",
     "@orpc/trpc": "^1.13.4",
     "@orpc/valibot": "^1.13.4",
-    "@orpc/zod": "^1.13.4",
     "@scalar/hono-api-reference": "^0.9.40",
     "@tanstack/react-router": "^1.159.5",
     "@tanstack/react-start": "^1.159.5",
@@ -40,6 +39,7 @@
     "nitro": "^3.0.1-alpha.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "trpc-to-openapi": "^3.1.0",
     "up-fetch": "^2.5.1",
     "valibot": "^1.2.0",
     "zod": "^4.3.6"

@@ -12,7 +12,7 @@ import {
   UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/users/schemas/user";
+} from "~/features/users/schemas/valibot/user";
 import { UserService } from "~/features/users/services/user-service";
 
 const TAG = "Users";

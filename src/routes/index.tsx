@@ -87,11 +87,19 @@ const FRAMEWORK_CARDS = [
   },
   {
     color: "danger",
-    description: "tRPC + Zod v4 → @orpc/trpc で oRPC に変換して OpenAPI を生成。",
+    description: "trpc-to-openapi で OpenAPI 生成。tRPC v11 + Zod v4 ネイティブ対応。",
     docsUrl: "/api/trpc-openapi/docs",
     name: "tRPC (OpenAPI)",
-    openapi: "@orpc/trpc 変換",
+    openapi: "trpc-to-openapi",
     validation: "Zod v4",
+  },
+  {
+    color: "secondary",
+    description: "tRPC + Valibot → @orpc/trpc で oRPC に変換して OpenAPI を生成。",
+    docsUrl: "/api/trpc-orpc/docs",
+    name: "tRPC (oRPC)",
+    openapi: "@orpc/trpc 変換",
+    validation: "Valibot",
   },
 ] as const satisfies readonly {
   color: "danger" | "primary" | "secondary" | "success" | "warning";

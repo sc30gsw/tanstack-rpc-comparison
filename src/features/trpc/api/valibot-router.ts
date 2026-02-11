@@ -1,31 +1,29 @@
-import { os } from "@orpc/server";
+import type { ORPCMeta } from "@orpc/trpc";
+import { TRPCError } from "@trpc/server";
+import { initTRPC } from "@trpc/server";
 import { Result } from "better-result";
-import * as v from "valibot";
+import { pick } from "valibot";
 
 import {
   CreateUserSchema,
   DeleteUserResponseSchema,
   ListUsersParamsSchema,
   SearchUsersParamsSchema,
-  UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
 } from "~/features/users/schemas/valibot/user";
 import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
-const base = os.errors({
-  BAD_REQUEST: { message: "リクエストが不正です" },
-  INTERNAL_SERVER_ERROR: { message: "サーバーエラーが発生しました" },
-  NOT_FOUND: { message: "リソースが見つかりません" },
-});
+//? ORPCMeta で oRPC 変換用の OpenAPI メタデータをサポート（Valibot 版）
+export const tv = initTRPC.meta<ORPCMeta>().create();
 
-export const router = base.router({
-  createUser: base
-    .route({ method: "POST", path: "/users", summary: "新しいユーザーを作成" })
+export const trpcValibotRouter = tv.router({
+  createUser: tv.procedure
+    .meta({ route: { method: "POST", path: "/users", summary: "新しいユーザーを作成" } })
     .input(CreateUserSchema)
     .output(UserSchema)
-    .handler(async ({ errors, input }) => {
+    .mutation(async ({ input }) => {
       const result = await Result.tryPromise({
         catch: toApiError,
         try: async () => await UserService.create(input),
@@ -33,7 +31,8 @@ export const router = base.router({
 
       return result.match({
         err: () => {
-          throw errors.INTERNAL_SERVER_ERROR({
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
             message: "ユーザーの作成に失敗しました",
           });
         },
@@ -41,15 +40,13 @@ export const router = base.router({
       });
     }),
 
-  deleteUser: base
-    .route({
-      method: "DELETE",
-      path: "/users/{id}",
-      summary: "ユーザーを削除",
+  deleteUser: tv.procedure
+    .meta({
+      route: { method: "DELETE", path: "/users/{id}", summary: "ユーザーを削除" },
     })
-    .input(v.object({ id: v.number() }))
+    .input(pick(UserSchema, ["id"]))
     .output(DeleteUserResponseSchema)
-    .handler(async ({ errors, input }) => {
+    .mutation(async ({ input }) => {
       const result = await Result.tryPromise({
         catch: toApiError,
         try: async () => await UserService.delete(input.id),
@@ -57,7 +54,8 @@ export const router = base.router({
 
       return result.match({
         err: () => {
-          throw errors.NOT_FOUND({
+          throw new TRPCError({
+            code: "NOT_FOUND",
             message: "削除対象のユーザーが見つかりません",
           });
         },
@@ -65,39 +63,13 @@ export const router = base.router({
       });
     }),
 
-  getUserById: base
-    .route({
-      method: "GET",
-      path: "/users/{id}",
-      summary: "指定IDのユーザーを取得",
-    })
-    .input(v.object({ id: v.number() }))
-    .output(UserSchema)
-    .handler(async ({ errors, input }) => {
-      const result = await Result.tryPromise({
-        catch: toApiError,
-        try: async () => await UserService.getById(input.id),
-      });
-
-      return result.match({
-        err: () => {
-          throw errors.NOT_FOUND({
-            message: "ユーザーが見つかりません",
-          });
-        },
-        ok: (user) => user,
-      });
-    }),
-
-  listUsers: base
-    .route({
-      method: "GET",
-      path: "/users",
-      summary: "ユーザー一覧を取得",
+  getUsers: tv.procedure
+    .meta({
+      route: { method: "GET", path: "/users", summary: "ユーザー一覧を取得" },
     })
     .input(ListUsersParamsSchema)
     .output(UserListResponseSchema)
-    .handler(async ({ errors, input }) => {
+    .query(async ({ input }) => {
       const result = await Result.tryPromise({
         catch: toApiError,
         try: async () => await UserService.list(input),
@@ -105,7 +77,8 @@ export const router = base.router({
 
       return result.match({
         err: () => {
-          throw errors.INTERNAL_SERVER_ERROR({
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
             message: "ユーザー一覧の取得に失敗しました",
           });
         },
@@ -113,15 +86,36 @@ export const router = base.router({
       });
     }),
 
-  searchUsers: base
-    .route({
-      method: "GET",
-      path: "/users/search",
-      summary: "ユーザーを検索",
+  getUserById: tv.procedure
+    .meta({
+      route: { method: "GET", path: "/users/{id}", summary: "指定IDのユーザーを取得" },
+    })
+    .input(pick(UserSchema, ["id"]))
+    .output(UserSchema)
+    .query(async ({ input }) => {
+      const result = await Result.tryPromise({
+        catch: toApiError,
+        try: async () => await UserService.getById(input.id),
+      });
+
+      return result.match({
+        err: () => {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "ユーザーが見つかりません",
+          });
+        },
+        ok: (user) => user,
+      });
+    }),
+
+  searchUsers: tv.procedure
+    .meta({
+      route: { method: "GET", path: "/users/search", summary: "ユーザーを検索" },
     })
     .input(SearchUsersParamsSchema)
     .output(UserListResponseSchema)
-    .handler(async ({ errors, input }) => {
+    .query(async ({ input }) => {
       const result = await Result.tryPromise({
         catch: toApiError,
         try: async () => await UserService.search(input),
@@ -129,7 +123,8 @@ export const router = base.router({
 
       return result.match({
         err: () => {
-          throw errors.INTERNAL_SERVER_ERROR({
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
             message: "ユーザー検索に失敗しました",
           });
         },
@@ -137,20 +132,13 @@ export const router = base.router({
       });
     }),
 
-  updateUser: base
-    .route({
-      method: "PUT",
-      path: "/users/{id}",
-      summary: "ユーザーを更新",
+  updateUser: tv.procedure
+    .meta({
+      route: { method: "PUT", path: "/users/{id}", summary: "ユーザーを更新" },
     })
-    .input(
-      v.object({
-        ...UpdateUserSchema.entries,
-        id: v.number(),
-      }),
-    )
+    .input(pick(UserSchema, ["age", "email", "firstName", "lastName", "username", "id"]))
     .output(UserSchema)
-    .handler(async ({ errors, input }) => {
+    .mutation(async ({ input }) => {
       const { id, ...data } = input;
       const result = await Result.tryPromise({
         catch: toApiError,
@@ -159,7 +147,8 @@ export const router = base.router({
 
       return result.match({
         err: () => {
-          throw errors.NOT_FOUND({
+          throw new TRPCError({
+            code: "NOT_FOUND",
             message: "更新対象のユーザーが見つかりません",
           });
         },
