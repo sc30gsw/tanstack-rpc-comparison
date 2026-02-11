@@ -1,6 +1,6 @@
 import { Result } from "better-result";
 import { Elysia } from "elysia";
-import type { CreateUserInput, UpdateUserInput } from "~/features/users/schemas/user";
+import type { CreateUserInput, UpdateUserInput } from "~/features/users/schemas/valibot/user";
 
 import { UserService } from "~/features/users/services/user-service";
 

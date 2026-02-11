@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@heroui/react";
 import { Link } from "@tanstack/react-router";
-import type { User, UserListResponse } from "~/features/users/schemas/user";
+import type { User, UserListResponse } from "~/features/users/schemas/valibot/user";
 
 const COLUMNS = [
   { key: "avatar", label: "" },

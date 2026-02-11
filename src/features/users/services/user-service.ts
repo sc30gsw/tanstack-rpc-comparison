@@ -4,13 +4,13 @@ import type {
   SearchUsersParams,
   UpdateUserInput,
   User,
-} from "~/features/users/schemas/user";
+} from "~/features/users/schemas/valibot/user";
 
 import {
   DeleteUserResponseSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/users/schemas/user";
+} from "~/features/users/schemas/valibot/user";
 import { upfetch } from "~/lib/upfetch";
 
 export abstract class UserService {
