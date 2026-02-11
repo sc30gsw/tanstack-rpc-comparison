@@ -34,6 +34,16 @@ bun test:run         # Vitest single run
 bun test:e2e         # Playwright E2E tests
 ```
 
+## RPC Framework Comparison
+
+| Framework        | Validation   | OpenAPI生成                   | Scalar UI                |
+| ---------------- | ------------ | ----------------------------- | ------------------------ |
+| tRPC             | Zod v4       | @orpc/trpc 変換               | /api/trpc-openapi/docs   |
+| Hono             | Valibot      | hono-openapi                  | /api/hono/docs           |
+| Elysia (Runtime) | Valibot      | @elysiajs/openapi             | /api/elysia/docs         |
+| Elysia (TypeGen) | TypeScript型 | @elysiajs/openapi (fromTypes) | /api/elysia-typegen/docs |
+| oRPC             | Valibot      | @orpc/openapi                 | /api/orpc/docs           |
+
 ## Critical Rules (Highest Priority)
 
 ### Prohibited Items
@@ -43,6 +53,7 @@ bun test:e2e         # Playwright E2E tests
 - ❌ **console.log remaining in production**
 - ❌ **Direct description of security keys**
 - ❌ **Use of npm/yarn/pnpm** (use bun only)
+- ❌ **Zod usage outside tRPC** (tRPC 以外では必ず Valibot を使用すること)
 
 ### Security
 
