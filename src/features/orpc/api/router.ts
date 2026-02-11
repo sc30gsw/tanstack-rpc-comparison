@@ -12,7 +12,7 @@ import {
   UserSchema,
 } from "~/features/users/schemas/valibot/user";
 import { UserService } from "~/features/users/services/user-service";
-import { toApiError } from "~/lib/errors";
+import { toApiError } from "~/utils/errors";
 
 const base = os.errors({
   BAD_REQUEST: { message: "リクエストが不正です" },

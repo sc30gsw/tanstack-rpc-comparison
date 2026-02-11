@@ -3,7 +3,6 @@ import { Result } from "better-result";
 import * as v from "valibot";
 
 import { homeSearchSchema } from "~/features/home/schemas/search-schema";
-import { toApiError } from "~/lib/errors";
 import {
   elysiaApi,
   elysiaTypegenApi,
@@ -13,6 +12,7 @@ import {
   trpcOpenapiClient,
   trpcOrpcClient,
 } from "~/lib/rpc-clients";
+import { toApiError } from "~/utils/errors";
 
 export const fetchUsers = createServerFn({ method: "GET" })
   .inputValidator(v.pick(homeSearchSchema, ["framework", "limit", "skip"]))

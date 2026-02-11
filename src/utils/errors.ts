@@ -1,6 +1,8 @@
 import type { ClientErrorStatusCode, ServerErrorStatusCode } from "hono/utils/http-status";
 import type { ValidationError } from "up-fetch";
 
+type StatusCode = ClientErrorStatusCode | ServerErrorStatusCode;
+
 function isValidationError(error: unknown): error is ValidationError {
   return (
     typeof error === "object" &&
@@ -12,7 +14,7 @@ function isValidationError(error: unknown): error is ValidationError {
 
 function isResponseError(error: unknown): error is {
   message: string;
-  response?: { status: number };
+  response?: Record<"status", StatusCode>;
 } {
   return (
     error instanceof Error &&
@@ -21,14 +23,10 @@ function isResponseError(error: unknown): error is {
   );
 }
 
-export type ApiError = {
-  code:
-    | "VALIDATION_ERROR"
-    | "TIMEOUT"
-    | `HTTP_${ClientErrorStatusCode | ServerErrorStatusCode}`
-    | "UNKNOWN_ERROR";
+type ApiError = {
+  code: "VALIDATION_ERROR" | "TIMEOUT" | `HTTP_${StatusCode}` | "UNKNOWN_ERROR";
   message: string;
-  status?: ClientErrorStatusCode | ServerErrorStatusCode;
+  status?: StatusCode;
 };
 
 export function toApiError(error: unknown): ApiError {
@@ -50,9 +48,9 @@ export function toApiError(error: unknown): ApiError {
 
   if (isResponseError(error)) {
     return {
-      code: `HTTP_${error.response?.status as ClientErrorStatusCode | ServerErrorStatusCode}`,
+      code: `HTTP_${error.response?.status as StatusCode}`,
       message: error.message || "サーバーエラーが発生しました",
-      status: error.response?.status as ClientErrorStatusCode | ServerErrorStatusCode,
+      status: error.response?.status as StatusCode,
     };
   }
 

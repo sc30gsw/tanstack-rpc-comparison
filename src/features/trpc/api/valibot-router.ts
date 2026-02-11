@@ -13,7 +13,7 @@ import {
   UserSchema,
 } from "~/features/users/schemas/valibot/user";
 import { UserService } from "~/features/users/services/user-service";
-import { toApiError } from "~/lib/errors";
+import { toApiError } from "~/utils/errors";
 
 //? ORPCMeta で oRPC 変換用の OpenAPI メタデータをサポート（Valibot 版）
 export const tv = initTRPC.meta<ORPCMeta>().create();

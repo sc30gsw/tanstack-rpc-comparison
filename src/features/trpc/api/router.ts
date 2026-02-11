@@ -12,7 +12,7 @@ import {
   UserSchema,
 } from "~/features/users/schemas/zod/user";
 import { UserService } from "~/features/users/services/user-service";
-import { toApiError } from "~/lib/errors";
+import { toApiError } from "~/utils/errors";
 
 //? OpenApiMeta で trpc-to-openapi の OpenAPI メタデータをサポート
 export const t = initTRPC.meta<OpenApiMeta>().create();
