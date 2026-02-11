@@ -5,6 +5,7 @@ import * as v from "valibot";
 import {
   CreateUserSchema,
   DeleteUserResponseSchema,
+  IdParamSchema,
   ListUsersParamsSchema,
   SearchUsersParamsSchema,
   UpdateUserSchema,
@@ -70,7 +71,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
         summary: "ユーザー取得",
         tags: [TAG],
       },
-      params: v.pick(UserSchema, ["id"]),
+      params: IdParamSchema,
       response: {
         200: UserSchema,
         404: v.object({ message: v.string() }),
@@ -114,7 +115,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
         summary: "ユーザー更新",
         tags: [TAG],
       },
-      params: v.pick(UserSchema, ["id"]),
+      params: IdParamSchema,
       response: {
         200: UserSchema,
         404: v.object({ message: v.string() }),
@@ -142,7 +143,7 @@ export const userPlugin = new Elysia({ name: "users", prefix: "/users" })
         summary: "ユーザー削除",
         tags: [TAG],
       },
-      params: v.pick(UserSchema, ["id"]),
+      params: IdParamSchema,
       response: {
         200: DeleteUserResponseSchema,
         404: v.object({ message: v.string() }),

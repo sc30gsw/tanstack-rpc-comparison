@@ -109,12 +109,19 @@ export const SearchUsersParamsSchema = v.object({
 
 export type SearchUsersParams = v.InferInput<typeof SearchUsersParamsSchema>;
 
+//? HTTPクエリパラメータ/URLパラメータは文字列として送信されるため、文字列→数値の自動変換をサポート
+const CoercedNumber = v.pipe(v.union([v.string(), v.number()]), v.transform(Number));
+
 export const ListUsersParamsSchema = v.object({
-  limit: v.optional(v.number()),
-  skip: v.optional(v.number()),
+  limit: v.optional(CoercedNumber),
+  skip: v.optional(CoercedNumber),
 });
 
-export type ListUsersParams = v.InferInput<typeof ListUsersParamsSchema>;
+export type ListUsersParams = v.InferOutput<typeof ListUsersParamsSchema>;
+
+export const IdParamSchema = v.object({
+  id: CoercedNumber,
+});
 
 export const DeleteUserResponseSchema = v.object({
   ...UserSchema.entries,

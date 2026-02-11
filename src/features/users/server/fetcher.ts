@@ -1,6 +1,6 @@
 import { Result } from "better-result";
 import type { Framework } from "~/features/home/constants/framework";
-import type { ListUsersParams, SearchUsersParams } from "~/features/users/schemas/user";
+import type { HomeSearchParams } from "~/features/home/schemas/search-schema";
 
 import { toApiError } from "~/lib/errors";
 import {
@@ -16,7 +16,7 @@ export function fetchUsers({
   framework,
   limit,
   skip,
-}: Record<"framework", Framework> & NonNullable<ListUsersParams>) {
+}: Record<"framework", Framework> & Pick<HomeSearchParams, "limit" | "skip">) {
   return Result.tryPromise({
     catch: toApiError,
     try: async () => {
@@ -69,7 +69,10 @@ export function fetchUsers({
   });
 }
 
-export function searchUsers({ framework, q }: Record<"framework", Framework> & SearchUsersParams) {
+export function searchUsers({
+  framework,
+  q,
+}: Record<"framework", Framework> & Pick<HomeSearchParams, "q">) {
   return Result.tryPromise({
     catch: toApiError,
     try: async () => {
