@@ -4,31 +4,31 @@
 
 ## Tech Stack
 
-| Category      | Technology                                                                             | Version   |
-| ------------- | -------------------------------------------------------------------------------------- | --------- |
-| Framework     | [TanStack Start](https://tanstack.com/start) / [React](https://react.dev/)            | 1.159.5 / 19 |
-| Build Tool    | [Vite](https://vite.dev/)                                                              | 8 Beta    |
-| UI Components | [HeroUI](https://www.heroui.com/) / [Tailwind CSS](https://tailwindcss.com/)           | 2.8.8 / 4 |
-| Routing       | [TanStack Router](https://tanstack.com/router) (File-based)                            | 1.159.5   |
-| RPC/API       | tRPC, oRPC, Hono, Elysia (比較用)                                                      | -         |
-| Validation    | [Valibot](https://valibot.dev/)（tRPC のみ [Zod](https://zod.dev/) v4）               | -         |
-| Language      | [TypeScript Native](https://devblogs.microsoft.com/typescript/typescript-native-port/) | 7 Preview |
-| Linter        | [oxlint](https://oxc.rs/docs/guide/usage/linter)                                       | Latest    |
-| Formatter     | [oxfmt](https://oxc.rs/docs/guide/usage/formatter)                                     | Latest    |
-| Git Hooks     | [Lefthook](https://github.com/evilmartians/lefthook)                                   | Latest    |
-| Runtime       | [Bun](https://bun.sh/)                                                                 | Latest    |
+| Category      | Technology                                                                             | Version      |
+| ------------- | -------------------------------------------------------------------------------------- | ------------ |
+| Framework     | [TanStack Start](https://tanstack.com/start) / [React](https://react.dev/)             | 1.159.5 / 19 |
+| Build Tool    | [Vite](https://vite.dev/)                                                              | 8 Beta       |
+| UI Components | [HeroUI](https://www.heroui.com/) / [Tailwind CSS](https://tailwindcss.com/)           | 2.8.8 / 4    |
+| Routing       | [TanStack Router](https://tanstack.com/router) (File-based)                            | 1.159.5      |
+| RPC/API       | tRPC, oRPC, Hono, Elysia (比較用)                                                      | -            |
+| Validation    | [Valibot](https://valibot.dev/)（tRPC のみ [Zod](https://zod.dev/) v4）                | -            |
+| Language      | [TypeScript Native](https://devblogs.microsoft.com/typescript/typescript-native-port/) | 7 Preview    |
+| Linter        | [oxlint](https://oxc.rs/docs/guide/usage/linter)                                       | Latest       |
+| Formatter     | [oxfmt](https://oxc.rs/docs/guide/usage/formatter)                                     | Latest       |
+| Git Hooks     | [Lefthook](https://github.com/evilmartians/lefthook)                                   | Latest       |
+| Runtime       | [Bun](https://bun.sh/)                                                                 | Latest       |
 
 ## RPC Framework Comparison
 
 各フレームワークの API エンドポイントと OpenAPI ドキュメント（Scalar UI）の URL:
 
-| Framework        | Validation   | OpenAPI 生成                   | Docs URL                 |
-| ---------------- | ------------ | ------------------------------ | ------------------------ |
-| tRPC             | Zod v4       | @orpc/trpc 変換                | /api/trpc-openapi/docs   |
-| Hono             | Valibot      | hono-openapi                   | /api/hono/docs           |
-| Elysia (Runtime) | Valibot      | @elysiajs/openapi              | /api/elysia/docs         |
-| Elysia (TypeGen) | TypeScript型 | @elysiajs/openapi (fromTypes)  | /api/elysia-typegen/docs |
-| oRPC             | Valibot      | @orpc/openapi                  | /api/orpc/docs           |
+| Framework        | Validation   | OpenAPI 生成                  | Docs URL                 |
+| ---------------- | ------------ | ----------------------------- | ------------------------ |
+| tRPC             | Zod v4       | @orpc/trpc 変換               | /api/trpc-openapi/docs   |
+| Hono             | Valibot      | hono-openapi                  | /api/hono/docs           |
+| Elysia (Runtime) | Valibot      | @elysiajs/openapi             | /api/elysia/docs         |
+| Elysia (TypeGen) | TypeScript型 | @elysiajs/openapi (fromTypes) | /api/elysia-typegen/docs |
+| oRPC             | Valibot      | @orpc/openapi                 | /api/orpc/docs           |
 
 ## Project Structure
 
@@ -71,17 +71,17 @@ bun dev
 
 ## Scripts
 
-| Command         | Description                          |
-| --------------- | ------------------------------------ |
-| `bun dev`       | 開発サーバーを起動                    |
-| `bun build`     | プロダクションビルド                 |
-| `bun start`     | プロダクションビルドのプレビュー      |
-| `bun check`     | oxlint (type-aware) + oxfmt チェック |
-| `bun fix`       | lint 自動修正 + フォーマット          |
-| `bun lint`      | oxlint のみ実行                      |
-| `bun lint:fix`  | oxlint の自動修正のみ                |
-| `bun fmt`       | oxfmt チェックのみ                   |
-| `bun fmt:fix`   | oxfmt でフォーマット実行             |
+| Command        | Description                          |
+| -------------- | ------------------------------------ |
+| `bun dev`      | 開発サーバーを起動                   |
+| `bun build`    | プロダクションビルド                 |
+| `bun start`    | プロダクションビルドのプレビュー     |
+| `bun check`    | oxlint (type-aware) + oxfmt チェック |
+| `bun fix`      | lint 自動修正 + フォーマット         |
+| `bun lint`     | oxlint のみ実行                      |
+| `bun lint:fix` | oxlint の自動修正のみ                |
+| `bun fmt`      | oxfmt チェックのみ                   |
+| `bun fmt:fix`  | oxfmt でフォーマット実行             |
 
 ## VS Code Configuration
 
@@ -145,27 +145,27 @@ bun dev
 
 ### ルール（.claude/rules/）
 
-| ルール | 内容 |
-| ------ | ---- |
+| ルール           | 内容                                   |
+| ---------------- | -------------------------------------- |
 | up-fetch-pattern | upfetch による HTTP リクエストパターン |
-| better-result | Result 型を用いたエラーハンドリング |
-| coding-style | コーディングスタイル・命名規則 |
-| git-workflow | コミット・PR のワークフロー |
-| security | セキュリティ方針 |
-| testing | テスト方針 |
-| agents | エージェントの役割と使い分け |
+| better-result    | Result 型を用いたエラーハンドリング    |
+| coding-style     | コーディングスタイル・命名規則         |
+| git-workflow     | コミット・PR のワークフロー            |
+| security         | セキュリティ方針                       |
+| testing          | テスト方針                             |
+| agents           | エージェントの役割と使い分け           |
 
 ### エージェント（.claude/agents/）
 
-| エージェント | 用途 | 使うタイミング |
-| ------------ | ---- | ---------------- |
-| planner | 実装計画 | 複雑な機能・リファクタリング |
-| tdd-guide | TDD | 新機能・バグ修正 |
-| code-reviewer | コードレビュー | コード記述後 |
-| security-reviewer | セキュリティ分析 | コミット前 |
-| build-error-resolver | ビルドエラー解消 | ビルド失敗時 |
-| e2e-runner | E2E テスト | 重要フローの検証 |
-| refactor-cleaner | デッドコード削除 | 保守・整理 |
+| エージェント         | 用途             | 使うタイミング               |
+| -------------------- | ---------------- | ---------------------------- |
+| planner              | 実装計画         | 複雑な機能・リファクタリング |
+| tdd-guide            | TDD              | 新機能・バグ修正             |
+| code-reviewer        | コードレビュー   | コード記述後                 |
+| security-reviewer    | セキュリティ分析 | コミット前                   |
+| build-error-resolver | ビルドエラー解消 | ビルド失敗時                 |
+| e2e-runner           | E2E テスト       | 重要フローの検証             |
+| refactor-cleaner     | デッドコード削除 | 保守・整理                   |
 
 ### スキル（.claude/skills/）
 
@@ -173,15 +173,15 @@ bun dev
 
 ### 利用可能なコマンド（スラッシュコマンド）
 
-| コマンド | 説明 |
-| -------- | ---- |
-| `/plan` | 実装プラン作成 |
-| `/tdd` | テスト駆動開発 |
-| `/code-review` | コード品質レビュー |
-| `/build-fix` | ビルド・型エラー修正 |
-| `/e2e` | E2E テスト生成・実行 |
-| `/refactor-clean` | デッドコード削除 |
-| `/test-coverage` | テストカバレッジ分析 |
+| コマンド          | 説明                 |
+| ----------------- | -------------------- |
+| `/plan`           | 実装プラン作成       |
+| `/tdd`            | テスト駆動開発       |
+| `/code-review`    | コード品質レビュー   |
+| `/build-fix`      | ビルド・型エラー修正 |
+| `/e2e`            | E2E テスト生成・実行 |
+| `/refactor-clean` | デッドコード削除     |
+| `/test-coverage`  | テストカバレッジ分析 |
 
 ## License
 
