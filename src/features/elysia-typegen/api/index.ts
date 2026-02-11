@@ -1,8 +1,8 @@
 import { Result } from "better-result";
 import { Elysia } from "elysia";
-import type { CreateUserInput, UpdateUserInput } from "~/features/shared/schemas/user";
+import type { CreateUserInput, UpdateUserInput } from "~/features/users/schemas/user";
 
-import { UserService } from "~/features/shared/services/user-service";
+import { UserService } from "~/features/users/services/user-service";
 
 const TAG = "Users";
 

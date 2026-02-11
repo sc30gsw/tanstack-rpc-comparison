@@ -4,13 +4,13 @@ import type {
   SearchUsersParams,
   UpdateUserInput,
   User,
-} from "~/features/shared/schemas/user";
+} from "~/features/users/schemas/user";
 
 import {
   DeleteUserResponseSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/shared/schemas/user";
+} from "~/features/users/schemas/user";
 import { upfetch } from "~/lib/upfetch";
 
 export abstract class UserService {

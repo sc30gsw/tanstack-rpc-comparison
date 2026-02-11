@@ -12,8 +12,8 @@ import {
   UpdateUserSchema,
   UserListResponseSchema,
   UserSchema,
-} from "~/features/shared/schemas/user";
-import { UserService } from "~/features/shared/services/user-service";
+} from "~/features/users/schemas/user";
+import { UserService } from "~/features/users/services/user-service";
 
 const TAG = "Users";
 

@@ -4,7 +4,6 @@ import { initTRPC } from "@trpc/server";
 import { Result } from "better-result";
 import { z } from "zod";
 
-import { UserService } from "~/features/shared/services/user-service";
 import {
   CreateUserSchema,
   DeleteUserResponseSchema,
@@ -12,6 +11,7 @@ import {
   UserListResponseSchema,
   UserSchema,
 } from "~/features/trpc/schemas/user";
+import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
 //? ORPCMeta で OpenAPI メタデータをサポート
