@@ -29,15 +29,12 @@ export const Route = createFileRoute("/")({
   },
   loader: async ({ deps }) => {
     const result = deps.q
-      ? await searchUsers({ framework: deps.framework, q: deps.q })
-      : await fetchUsers({ framework: deps.framework, limit: deps.limit, skip: deps.skip });
+      ? await searchUsers({ data: { framework: deps.framework, q: deps.q } })
+      : await fetchUsers({
+          data: { framework: deps.framework, limit: deps.limit, skip: deps.skip },
+        });
 
-    return result.match({
-      err: (error) => {
-        throw new Error(error.message);
-      },
-      ok: (data) => ({ ...data, framework: deps.framework }),
-    });
+    return result;
   },
   component: Home,
   pendingComponent: () => (
