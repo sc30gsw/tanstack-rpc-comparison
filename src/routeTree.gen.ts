@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
+import { Route as ApiTrpcOpenapiSplatRouteImport } from './routes/api/trpc-openapi/$'
+import { Route as ApiOrpcSplatRouteImport } from './routes/api/orpc/$'
+import { Route as ApiHonoSplatRouteImport } from './routes/api/hono/$'
+import { Route as ApiElysiaSplatRouteImport } from './routes/api/elysia/$'
+import { Route as ApiElysiaTypegenSplatRouteImport } from './routes/api/elysia-typegen/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcOpenapiSplatRoute = ApiTrpcOpenapiSplatRouteImport.update({
+  id: '/api/trpc-openapi/$',
+  path: '/api/trpc-openapi/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrpcSplatRoute = ApiOrpcSplatRouteImport.update({
+  id: '/api/orpc/$',
+  path: '/api/orpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHonoSplatRoute = ApiHonoSplatRouteImport.update({
+  id: '/api/hono/$',
+  path: '/api/hono/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiElysiaSplatRoute = ApiElysiaSplatRouteImport.update({
+  id: '/api/elysia/$',
+  path: '/api/elysia/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiElysiaTypegenSplatRoute = ApiElysiaTypegenSplatRouteImport.update({
+  id: '/api/elysia-typegen/$',
+  path: '/api/elysia-typegen/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/elysia-typegen/$': typeof ApiElysiaTypegenSplatRoute
+  '/api/elysia/$': typeof ApiElysiaSplatRoute
+  '/api/hono/$': typeof ApiHonoSplatRoute
+  '/api/orpc/$': typeof ApiOrpcSplatRoute
+  '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/elysia-typegen/$': typeof ApiElysiaTypegenSplatRoute
+  '/api/elysia/$': typeof ApiElysiaSplatRoute
+  '/api/hono/$': typeof ApiHonoSplatRoute
+  '/api/orpc/$': typeof ApiOrpcSplatRoute
+  '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/elysia-typegen/$': typeof ApiElysiaTypegenSplatRoute
+  '/api/elysia/$': typeof ApiElysiaSplatRoute
+  '/api/hono/$': typeof ApiHonoSplatRoute
+  '/api/orpc/$': typeof ApiOrpcSplatRoute
+  '/api/trpc-openapi/$': typeof ApiTrpcOpenapiSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/elysia-typegen/$'
+    | '/api/elysia/$'
+    | '/api/hono/$'
+    | '/api/orpc/$'
+    | '/api/trpc-openapi/$'
+    | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/elysia-typegen/$'
+    | '/api/elysia/$'
+    | '/api/hono/$'
+    | '/api/orpc/$'
+    | '/api/trpc-openapi/$'
+    | '/api/trpc/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/elysia-typegen/$'
+    | '/api/elysia/$'
+    | '/api/hono/$'
+    | '/api/orpc/$'
+    | '/api/trpc-openapi/$'
+    | '/api/trpc/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiElysiaTypegenSplatRoute: typeof ApiElysiaTypegenSplatRoute
+  ApiElysiaSplatRoute: typeof ApiElysiaSplatRoute
+  ApiHonoSplatRoute: typeof ApiHonoSplatRoute
+  ApiOrpcSplatRoute: typeof ApiOrpcSplatRoute
+  ApiTrpcOpenapiSplatRoute: typeof ApiTrpcOpenapiSplatRoute
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc-openapi/$': {
+      id: '/api/trpc-openapi/$'
+      path: '/api/trpc-openapi/$'
+      fullPath: '/api/trpc-openapi/$'
+      preLoaderRoute: typeof ApiTrpcOpenapiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/orpc/$': {
+      id: '/api/orpc/$'
+      path: '/api/orpc/$'
+      fullPath: '/api/orpc/$'
+      preLoaderRoute: typeof ApiOrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/hono/$': {
+      id: '/api/hono/$'
+      path: '/api/hono/$'
+      fullPath: '/api/hono/$'
+      preLoaderRoute: typeof ApiHonoSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/elysia/$': {
+      id: '/api/elysia/$'
+      path: '/api/elysia/$'
+      fullPath: '/api/elysia/$'
+      preLoaderRoute: typeof ApiElysiaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/elysia-typegen/$': {
+      id: '/api/elysia-typegen/$'
+      path: '/api/elysia-typegen/$'
+      fullPath: '/api/elysia-typegen/$'
+      preLoaderRoute: typeof ApiElysiaTypegenSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiElysiaTypegenSplatRoute: ApiElysiaTypegenSplatRoute,
+  ApiElysiaSplatRoute: ApiElysiaSplatRoute,
+  ApiHonoSplatRoute: ApiHonoSplatRoute,
+  ApiOrpcSplatRoute: ApiOrpcSplatRoute,
+  ApiTrpcOpenapiSplatRoute: ApiTrpcOpenapiSplatRoute,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
