@@ -16,7 +16,7 @@ export const trpcCaller = t.createCallerFactory(trpcRouter)({});
 //! tRPC OpenAPI: tRPC → oRPC 変換ルーターの直接呼び出し（HTTP なし）
 export const trpcOpenapiClient = createRouterClient(toORPCRouter(trpcRouter));
 
-export const honoClient = hc<AppType>("http://localhost:5173");
+export const honoClient = hc<AppType>(import.meta.env.VITE_APP_URL);
 
 export const elysiaApi = treaty(elysiaPlugin);
 export const elysiaTypegenApi = treaty(elysiaTypegenPlugin);

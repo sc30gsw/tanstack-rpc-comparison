@@ -37,6 +37,7 @@
     "framer-motion": "^12.34.0",
     "hono": "^4.11.9",
     "hono-openapi": "^1.2.0",
+    "nitro": "^3.0.1-alpha.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "up-fetch": "^2.5.1",
