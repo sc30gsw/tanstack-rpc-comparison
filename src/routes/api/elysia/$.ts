@@ -1,5 +1,6 @@
 import { openapi } from "@elysiajs/openapi";
 import { createFileRoute } from "@tanstack/react-router";
+import { toJsonSchema } from "@valibot/to-json-schema";
 import { Elysia } from "elysia";
 
 import { userPlugin } from "~/features/elysia/api";
@@ -7,6 +8,9 @@ import { userPlugin } from "~/features/elysia/api";
 const app = new Elysia({ prefix: "/api/elysia" })
   .use(
     openapi({
+      mapJsonSchema: {
+        valibot: toJsonSchema,
+      },
       documentation: {
         info: {
           description: "Elysia + Valibot (Runtime Schema) による User API",
