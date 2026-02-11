@@ -15,11 +15,14 @@
     "start": "vite preview"
   },
   "dependencies": {
+    "@elysiajs/openapi": "^1.4.14",
     "@heroui/react": "^2.8.8",
     "@hono/standard-validator": "^0.2.2",
+    "@hono/valibot-validator": "^0.6.1",
     "@orpc/client": "^1.13.4",
     "@orpc/openapi": "^1.13.4",
     "@orpc/server": "^1.13.4",
+    "@orpc/trpc": "^1.13.4",
     "@scalar/hono-api-reference": "^0.9.40",
     "@tanstack/react-router": "^1.159.5",
     "@tanstack/react-start": "^1.159.5",
@@ -34,7 +37,8 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "up-fetch": "^2.5.1",
-    "valibot": "^1.2.0"
+    "valibot": "^1.2.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
