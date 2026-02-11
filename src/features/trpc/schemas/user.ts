@@ -72,16 +72,12 @@ export const UserSchema = z.object({
   weight: z.number(),
 });
 
-export type User = z.infer<typeof UserSchema>;
-
 export const UserListResponseSchema = z.object({
   limit: z.number(),
   skip: z.number(),
   total: z.number(),
   users: z.array(UserSchema),
 });
-
-export type UserListResponse = z.infer<typeof UserListResponseSchema>;
 
 export const CreateUserSchema = z.object({
   age: z.number(),
@@ -91,8 +87,6 @@ export const CreateUserSchema = z.object({
   username: z.string(),
 });
 
-export type CreateUserInput = z.infer<typeof CreateUserSchema>;
-
 export const UpdateUserSchema = z.object({
   age: z.number().optional(),
   email: z.email().optional(),
@@ -101,11 +95,7 @@ export const UpdateUserSchema = z.object({
   username: z.string().optional(),
 });
 
-export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
-
 export const DeleteUserResponseSchema = UserSchema.extend({
   deletedOn: z.string(),
   isDeleted: z.boolean(),
 });
-
-export type DeleteUserResponse = z.infer<typeof DeleteUserResponseSchema>;
