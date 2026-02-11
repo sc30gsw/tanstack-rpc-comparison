@@ -15,6 +15,7 @@
     "start": "vite preview"
   },
   "dependencies": {
+    "@elysiajs/eden": "^1.4.8",
     "@elysiajs/openapi": "^1.4.14",
     "@heroui/react": "^2.8.8",
     "@hono/standard-validator": "^0.2.2",
