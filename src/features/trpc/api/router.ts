@@ -15,7 +15,7 @@ import { UserService } from "~/features/users/services/user-service";
 import { toApiError } from "~/lib/errors";
 
 //? ORPCMeta で OpenAPI メタデータをサポート
-const t = initTRPC.meta<ORPCMeta>().create();
+export const t = initTRPC.meta<ORPCMeta>().create();
 
 export const trpcRouter = t.router({
   createUser: t.procedure
