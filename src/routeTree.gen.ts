@@ -10,42 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
-import { Route as ApiTrpcOrpcSplatRouteImport } from './routes/api/trpc-orpc/$'
-import { Route as ApiTrpcOpenapiSplatRouteImport } from './routes/api/trpc-openapi/$'
-import { Route as ApiOrpcSplatRouteImport } from './routes/api/orpc/$'
-import { Route as ApiHonoSplatRouteImport } from './routes/api/hono/$'
-import { Route as ApiElysiaSplatRouteImport } from './routes/api/elysia/$'
 import { Route as ApiElysiaTypegenSplatRouteImport } from './routes/api/elysia-typegen/$'
+import { Route as ApiElysiaSplatRouteImport } from './routes/api/elysia/$'
+import { Route as ApiHonoSplatRouteImport } from './routes/api/hono/$'
+import { Route as ApiOrpcSplatRouteImport } from './routes/api/orpc/$'
+import { Route as ApiTrpcOpenapiSplatRouteImport } from './routes/api/trpc-openapi/$'
+import { Route as ApiTrpcOrpcSplatRouteImport } from './routes/api/trpc-orpc/$'
+import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: '/api/trpc/$',
-  path: '/api/trpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTrpcOrpcSplatRoute = ApiTrpcOrpcSplatRouteImport.update({
-  id: '/api/trpc-orpc/$',
-  path: '/api/trpc-orpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiTrpcOpenapiSplatRoute = ApiTrpcOpenapiSplatRouteImport.update({
-  id: '/api/trpc-openapi/$',
-  path: '/api/trpc-openapi/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiOrpcSplatRoute = ApiOrpcSplatRouteImport.update({
-  id: '/api/orpc/$',
-  path: '/api/orpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiHonoSplatRoute = ApiHonoSplatRouteImport.update({
-  id: '/api/hono/$',
-  path: '/api/hono/$',
+const ApiElysiaTypegenSplatRoute = ApiElysiaTypegenSplatRouteImport.update({
+  id: '/api/elysia-typegen/$',
+  path: '/api/elysia-typegen/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiElysiaSplatRoute = ApiElysiaSplatRouteImport.update({
@@ -53,9 +33,29 @@ const ApiElysiaSplatRoute = ApiElysiaSplatRouteImport.update({
   path: '/api/elysia/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiElysiaTypegenSplatRoute = ApiElysiaTypegenSplatRouteImport.update({
-  id: '/api/elysia-typegen/$',
-  path: '/api/elysia-typegen/$',
+const ApiHonoSplatRoute = ApiHonoSplatRouteImport.update({
+  id: '/api/hono/$',
+  path: '/api/hono/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrpcSplatRoute = ApiOrpcSplatRouteImport.update({
+  id: '/api/orpc/$',
+  path: '/api/orpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcOpenapiSplatRoute = ApiTrpcOpenapiSplatRouteImport.update({
+  id: '/api/trpc-openapi/$',
+  path: '/api/trpc-openapi/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcOrpcSplatRoute = ApiTrpcOrpcSplatRouteImport.update({
+  id: '/api/trpc-orpc/$',
+  path: '/api/trpc-orpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -143,39 +143,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/trpc/$': {
-      id: '/api/trpc/$'
-      path: '/api/trpc/$'
-      fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/trpc-orpc/$': {
-      id: '/api/trpc-orpc/$'
-      path: '/api/trpc-orpc/$'
-      fullPath: '/api/trpc-orpc/$'
-      preLoaderRoute: typeof ApiTrpcOrpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/trpc-openapi/$': {
-      id: '/api/trpc-openapi/$'
-      path: '/api/trpc-openapi/$'
-      fullPath: '/api/trpc-openapi/$'
-      preLoaderRoute: typeof ApiTrpcOpenapiSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/orpc/$': {
-      id: '/api/orpc/$'
-      path: '/api/orpc/$'
-      fullPath: '/api/orpc/$'
-      preLoaderRoute: typeof ApiOrpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/hono/$': {
-      id: '/api/hono/$'
-      path: '/api/hono/$'
-      fullPath: '/api/hono/$'
-      preLoaderRoute: typeof ApiHonoSplatRouteImport
+    '/api/elysia-typegen/$': {
+      id: '/api/elysia-typegen/$'
+      path: '/api/elysia-typegen/$'
+      fullPath: '/api/elysia-typegen/$'
+      preLoaderRoute: typeof ApiElysiaTypegenSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/elysia/$': {
@@ -185,11 +157,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiElysiaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/elysia-typegen/$': {
-      id: '/api/elysia-typegen/$'
-      path: '/api/elysia-typegen/$'
-      fullPath: '/api/elysia-typegen/$'
-      preLoaderRoute: typeof ApiElysiaTypegenSplatRouteImport
+    '/api/hono/$': {
+      id: '/api/hono/$'
+      path: '/api/hono/$'
+      fullPath: '/api/hono/$'
+      preLoaderRoute: typeof ApiHonoSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/orpc/$': {
+      id: '/api/orpc/$'
+      path: '/api/orpc/$'
+      fullPath: '/api/orpc/$'
+      preLoaderRoute: typeof ApiOrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc-openapi/$': {
+      id: '/api/trpc-openapi/$'
+      path: '/api/trpc-openapi/$'
+      fullPath: '/api/trpc-openapi/$'
+      preLoaderRoute: typeof ApiTrpcOpenapiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc-orpc/$': {
+      id: '/api/trpc-orpc/$'
+      path: '/api/trpc-orpc/$'
+      fullPath: '/api/trpc-orpc/$'
+      preLoaderRoute: typeof ApiTrpcOrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
